@@ -54,8 +54,7 @@ app.delete('/posts/:id', (req, res) => {
 		})
 		.catch(err => {
 			console.error(err);
-			res.status(500).json({error: 'not able to delete'});
-
+			res.status(500).json({error: 'internal server error'});
 		});
 });
 
@@ -78,15 +77,18 @@ app.put('/posts/:id', jsonParser, (req, res) => {
 		return res.status(400).send(message);
 	}
 	console.log(`Updating blog-posts item \`${req.params.id}\``);
-	BlogPosts.update({
+	BlogPost.findByIdAndUpdate(req.params.id,{
 		id: req.params.id,
 		title: req.body.title,
 		content: req.body.content,
-		author: req.body.author,
-		publishDate: req.body.publishDate
-  })
-  res.status(204).end();
-})
+		created: req.body.created
+  },function(err) {
+  	if(err)
+  		return res.status(500).send(err)
+  			res.status(204).end();
+  }
+  ) 
+});
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
   return new Promise((resolve, reject) => {
