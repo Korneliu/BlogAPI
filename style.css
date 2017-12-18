@@ -1,0 +1,13 @@
+.main {
+	display: flex;
+	justify-content: space-between;
+	width: 1200px;
+	margin: 0 auto;
+	background-color: #f4d142;
+
+}
+.box {
+	margin: 0 auto;
+	background-color: #42d7f4;
+}
+

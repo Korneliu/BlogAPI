@@ -1,26 +1,39 @@
 const express = require('express');
 const router = express.Router();
-//const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
-const {BlogPosts} = require('./models');
-
+const {PORT, DATABASE_URL} = require('./config');
+const {BlogPost} = require('./models');
 const jsonParser = bodyParser.json();
 const app = express();
-//not sure about 'common'
-//app.use(morgan('common'));
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-BlogPosts.create('Space X','Falcon 12 from Space X landed on Mars',
-	'Neil deGrasse Tyson','12 July 2030');
-BlogPosts.create('Windows 12','Microsoft announced new Windows',
-	'Lara Wilson','10 October 2024');
-
-app.get('/blog-posts', (req, res) => {
-	res.json(BlogPosts.get());
+app.get('/posts', (req, res) => {
+	BlogPost
+	.find()
+	.limit(10)
+	.then(posts => {
+		res.json(posts.map(post => post.serialize()));
+	})
+	.catch(
+      err => {
+        console.error(err);
+        res.status(500).json({message: 'Internal server error'});
+    });
 });
 
-app.post('/blog-posts', jsonParser, (req, res) => {
-	const requiredFields = ['title', 'content', 'author', 'publishDate'];
+app.get('/posts/:id', (req, res) => {
+  BlogPost
+    .findById(req.params.id)
+    .then(post =>res.json(post.serialize()))
+    .catch(err => {
+      console.error(err);
+        res.status(500).json({message: 'Internal server error'})
+    });
+});
+
+app.post('/posts', jsonParser, (req, res) => {
+	const requiredFields = ['title', 'content', 'author', 'created'];
 	for (let i=0; i<requiredFields.length; i++) {
 	const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -29,17 +42,24 @@ app.post('/blog-posts', jsonParser, (req, res) => {
 			return res.status(400).send(message);
 		}
 	}
-	const item = BlogPosts.create(req.body.title, req.body.content, req.body.author,
-		req.body.publishDate);
+	const item = BlogPost.create(req.body);
 	res.status(201).json(item);
 });
 
-app.delete('/blog-posts/:id', (req, res) => {
-	BlogPosts.delete(req.params.id);
-	console.log(`Deleted blog post \`${req.params.id}\``);
-	res.status(204).end();
-})
+app.delete('/posts/:id', (req, res) => {
+	BlogPost
+		.findByIdAndRemove(req.params.id)
+		.then(() => {
+			res.status(204).json({ message: 'succes'});
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({error: 'not able to delete'});
 
+		});
+});
+
+/*
 app.put('/blog-posts/:id', jsonParser, (req, res) => {
 	const requiredFields = ['title', 'content', 'author', 'publishDate']; 
 	for (let i=0; i<requiredFields.length; i++) {
@@ -67,9 +87,45 @@ app.put('/blog-posts/:id', jsonParser, (req, res) => {
   })
   res.status(204).end();
 })
+*/
+function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+  return new Promise((resolve, reject) => {
+    mongoose.connect(databaseUrl, { useMongoClient: true }, err => {
+      if (err) {
+        return reject(err);
+      }
+      server = app.listen(port, () => {
+        console.log(`Your app is listening on port ${port}`);
+        resolve();
+      })
+      .on('error', err => {
+        mongoose.disconnect();
+        reject(err);
+      });
+    });
+  });
+}
+
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+     return new Promise((resolve, reject) => {
+       console.log('Closing server');
+       server.close(err => {
+           if (err) {
+               return reject(err);
+           }
+           resolve();
+       });
+     });
+  });
+}
+
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+};
+
+module.exports = {app, runServer, closeServer};
 
 
-app.listen(process.env.PORT || 8080, () => {
-	console.log(`My app should be listening on port ${process.env.PORT || 8080}`);
-})
+
 	
