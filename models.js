@@ -14,12 +14,6 @@ blogSchema.virtual('authorName').get(function() {
   return `${this.author.firstName} ${this.author.lastName}`.trim();
 });
 
-/*	return {
-		title: this.title,
-		content: this.content,
-		author: this.author
-	}
-}*/
 
 blogSchema.methods.serialize = function() {
   return {

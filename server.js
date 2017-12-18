@@ -59,9 +59,9 @@ app.delete('/posts/:id', (req, res) => {
 		});
 });
 
-/*
-app.put('/blog-posts/:id', jsonParser, (req, res) => {
-	const requiredFields = ['title', 'content', 'author', 'publishDate']; 
+
+app.put('/posts/:id', jsonParser, (req, res) => {
+	const requiredFields = ['title', 'content', 'author', 'created']; 
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -87,7 +87,7 @@ app.put('/blog-posts/:id', jsonParser, (req, res) => {
   })
   res.status(204).end();
 })
-*/
+
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, { useMongoClient: true }, err => {
