@@ -4,6 +4,6 @@ deploy:
   provider: heroku
   api_key:
     secure: LV2GYhV49TZDNvWwDu0qVWSMpaQ43rtcoTqPSUhgraO37yixJVskbzfQNgyPX6r1atPynaKg+GhbaFTD3R6Fh0UHAcpvIeyOWpMVB+HMy5EM7ubEqkYzqr2UOwHBy/OTyqEct7onIyO9QOMT5E2id/Ot2W4O74ys4DCCcx/ng6FzdLNvAlXVeXlbiv2Yo0tW8TCd08kpOQOmAKfE9s0yre5lWGemald4eyypKTKxWF7+rulUvnpaC0cmQ3lIXyDunisNqIpzyz+thT2uq75PX6x6g3nPGyNza/2nDK1tM5+GFPgMfwd5YUNxjGMonLveCuGPb+B0WsIIREwNrUTckbONZGgcgfDn6+v87sBt8R7qAdfU4DKHBu+KHbw4yaK+rsoMuQeNbgLjgKL8ZnmRO11g72rqhKdR3qXhmlc5z1cadpntBtMOMFljXqGl05/TWWKdLcR7M6yLrD/oUos+RJhtMliOAUnS9sHz7Z4vdXy8d0tYJD92EMGrS7Jpzxlxo9kIj/Nv315qjWz24mT179vLtJLvgI99kX+uz2Nq8rbxyrTZhlDLzQw3UdNllSXjvz39jCkeW8K9527Ba5lTac8ZhA+C7Rz2pPa8kLClvYRck26H4Qtp3ur8UiVoK2Eq95Dsq9K5/3uKnuX0HpkF0LElW9foWkeJfa/7Ugvrlx8=
-  app: fast-falls-25218
+  app: blog-post-first
   on:
     repo: Korneliu/BlogAPI
