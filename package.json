@@ -4,7 +4,7 @@
   "description": "blog challenge api",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "node server.js"
   },
   "author": "Max",
