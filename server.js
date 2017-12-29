@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -7,6 +8,7 @@ const jsonParser = bodyParser.json();
 const app = express();
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+app.use(cors());
 
 app.get('/posts', (req, res) => {
 	BlogPost
