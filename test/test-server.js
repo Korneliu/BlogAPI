@@ -21,24 +21,30 @@ describe('post', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
+        const expectedKeys = ['title', 'content', 'author', 'created'];
+        res.body.forEach(function(item) {
+          item.should.be.a('object');
+          item.should.include.keys(expec
       });
   });
   it('should add a blog post on POST', function() {
     const newPost = {
       title: 'Five Weeks in a Baloon',
       content: 'A scholar and explorer, Dr. Samuel Fergusson',
-      author: 'Jules Verne',
-      created: '12/12/2000'
+      author: 'Jules Verne'
     };
-    
+
     return chai.request(app)
       .post('/posts')
       .send(newPost)
       .then(function(res) {
         res.should.have.status(201);
         res.should.be.json;
-        res.body.should.be.a('object'); 
-        res.should.include.keys('title', 'content', 'author','created')
+        res.body.should.be.a('object');
+        res.body.id.should.not.be.null; 
+        res.should.include.keys('title', 'content', 'author')
+        res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
     });
 });
+    
