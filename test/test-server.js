@@ -24,9 +24,8 @@ describe('post', function() {
         expect(res.body).to.eql({});
         res.body.forEach(function(item) {
           item.should.be.a('object');
-          item.should.have.all.keys('id','author','title','content','created'
-            );
-          }
+          item.should.have.all.keys('id','author','title','content','created');
+        });
       });
     });
   });
