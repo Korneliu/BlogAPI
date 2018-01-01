@@ -21,10 +21,9 @@ describe('post', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.above(0);
-        const expectedKeys = ['id','author', 'title', 'content', 'created'];
         res.body.forEach(function(item) {
           item.should.be.a('object');
-          item.should.include.keys(expectedKeys);
+          item.should.have.all.keys('id','author','title','content','created');
       });
     });
   });
