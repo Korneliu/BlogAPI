@@ -26,6 +26,7 @@ describe('post', function() {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
       });
+    });
   });
   it('should add a blog post on POST', function() {
     const newPost = {
@@ -45,6 +46,5 @@ describe('post', function() {
         res.should.include.keys('title', 'content', 'author')
         res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
-    });
+  });
 });
-    
