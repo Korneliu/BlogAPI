@@ -23,11 +23,13 @@ describe('post', function() {
         res.body.length.should.be.above(0);
         res.body.forEach(function(item) {
           item.should.be.a('object');
-          item.should.have.all.keys('author','title','content');
+          item.should.have.all.keys('id','author','title','content','created'
+            );
       });
     });
   });
   /*it('should add a blog post on POST', function() {
+
     const newPost = {author : 'jules verne',
                      title: 'lorem ipsum',
                      content: 'lorem ipsum'
