@@ -21,10 +21,12 @@ describe('post', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.above(0);
+        expect(res.body).to.eql({});
         res.body.forEach(function(item) {
           item.should.be.a('object');
           item.should.have.all.keys('id','author','title','content','created'
             );
+          }
       });
     });
   });
