@@ -27,9 +27,10 @@ describe('post', function() {
     const newPost = {
       title: 'Five Weeks in a Baloon',
       content: 'A scholar and explorer, Dr. Samuel Fergusson',
-      author: 'Jules Verne'
+      author: 'Jules Verne',
+      created: '12/12/2000'
     };
-    const expectedKeys = ['title', 'content', 'author'].concat(Object.keys(newPost));
+    const expectedKeys = ['title', 'content', 'author', 'created'];
 
     return chai.request(app)
       .post('/posts')
@@ -37,7 +38,8 @@ describe('post', function() {
       .then(function(res) {
         res.should.have.status(201);
         res.should.be.json;
-        res.body.should.be.a('object');
+        res.body.should.be.a('object'); 
+        res.should.include.keys('title', 'content', 'author','created')
       });
     });
 });
