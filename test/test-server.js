@@ -21,10 +21,10 @@ describe('post', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
-        const expectedKeys = ['title', 'content', 'author', 'created'];
+        const expectedKeys = ['title', 'content', 'author'];
         res.body.forEach(function(item) {
           item.should.be.a('object');
-          item.should.include.keys(expec
+          item.should.include.keys(expectedKeys);
       });
   });
   it('should add a blog post on POST', function() {
