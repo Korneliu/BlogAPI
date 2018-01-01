@@ -47,4 +47,3 @@ describe('post', function() {
         res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
   });*/
-});
