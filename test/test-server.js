@@ -45,5 +45,5 @@ describe('post', function() {
         res.should.include.keys('author', 'title', 'content',)
         res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
-  });*/
+  });
 });
