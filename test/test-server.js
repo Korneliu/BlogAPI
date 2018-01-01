@@ -29,9 +29,9 @@ describe('posts', function() {
     });
   });
   it('should add a blog post on POST', function() {
-    const newPost = {title : 'five weeks',
-                     content: 'lorem ipsum',
-                     author: 'jules verne'
+    const newPost = {author : 'jules verne',
+                     title: 'lorem ipsum',
+                     content: 'lorem ipsum'
                     }; 
     return chai.request(app)
       .post('/posts')
@@ -41,7 +41,7 @@ describe('posts', function() {
         res.should.be.json;
         res.body.should.be.a('object');
         res.body.id.should.not.be.null; 
-        res.should.include.keys('id', 'author', 'title', 'content', 'created')
+        res.should.include.keys('id', 'author', 'title', 'content',)
         res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
   });
