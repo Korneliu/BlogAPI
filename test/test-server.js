@@ -27,8 +27,8 @@ describe('post', function() {
         });*/
       });
     });
-  });
-  /*it('should add a blog post on POST', function() {
+ 
+  it('should add a blog post on POST', function() {
 
     const newPost = {author : 'jules verne',
                      title: 'lorem ipsum',
@@ -46,3 +46,4 @@ describe('post', function() {
         res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
   });*/
+});
