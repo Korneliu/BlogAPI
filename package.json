@@ -4,8 +4,8 @@
   "description": "blog challenge api",
   "main": "server.js",
   "scripts": {
-    "test": "mocha ./test",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha ./test"
   },
   "author": "Max",
   "license": "ISC",
