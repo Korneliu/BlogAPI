@@ -29,7 +29,7 @@ describe('post', function() {
       content: 'A scholar and explorer, Dr. Samuel Fergusson',
       author: 'Jules Verne'
     };
-    const expectedKeys = ['id', 'publishDate'].concat(Object.keys(newPost));
+    const expectedKeys = ['title', 'content', 'author'].concat(Object.keys(newPost));
 
     return chai.request(app)
       .post('/posts')
@@ -38,10 +38,6 @@ describe('post', function() {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.should.have.all.keys(expectedKeys);
-        res.body.title.should.equal(newPost.title);
-        res.body.content.should.equal(newPost.content);
-        res.body.author.should.equal(newPost.author)
       });
     });
 });
