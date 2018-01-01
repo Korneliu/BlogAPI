@@ -21,7 +21,7 @@ describe('post', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
-        const expectedKeys = ['title', 'content', 'author'];
+        const expectedKeys = ['id','title', 'content', 'author'];
         res.body.forEach(function(item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
@@ -29,12 +29,10 @@ describe('post', function() {
     });
   });
   it('should add a blog post on POST', function() {
-    const newPost = {
-      title: 'Five Weeks in a Baloon',
-      content: 'A scholar and explorer, Dr. Samuel Fergusson',
-      author: 'Jules Verne'
-    };
-
+    const newPost = {title : 'five weeks',
+                     content: 'lorem ipsum',
+                     author: 'jules verne'
+                    }; 
     return chai.request(app)
       .post('/posts')
       .send(newPost)
