@@ -30,8 +30,7 @@ describe('post', function() {
       author: 'Jules Verne',
       created: '12/12/2000'
     };
-    const expectedKeys = ['title', 'content', 'author', 'created'];
-
+    
     return chai.request(app)
       .post('/posts')
       .send(newPost)
