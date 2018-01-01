@@ -46,4 +46,32 @@ describe('post', function() {
         res.body.content.should.equal(newPost.content);*/
       });
   });
+  it('should error if POST missing expected values', function() {
+    const badRequestData = {};
+    return chai.request(app)
+      .post('/posts')
+      .send(badRequestData)
+      .catch(function(res) {
+        res.should.have.status(400);
+     });
+  });
+
+  it('should update recipes on PUT', function() {
+    const updateData = {
+      author: 'Robin',
+      title: 'New Book',
+      content: 'lorem ipsum'
+    };
+    return chai.request(app)
+      .get('/posts')
+      .then(function(res) {
+        updateData.id = res.body[0].id;
+        return chai.request(app)
+          .put(`/posts/${updateData.id}`)
+          .send(updateData);
+      })
+      .then(function(res) {
+        res.should.have.status(204);
+      });
+  });
 });
