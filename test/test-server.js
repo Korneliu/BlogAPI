@@ -1,4 +1,4 @@
-'use strict';
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {app, runServer, closeServer} = require('../server');
@@ -21,7 +21,7 @@ describe('posts', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
-        const expectedKeys = ['id','title', 'content', 'author'];
+        const expectedKeys = ['id','author', 'content', 'created'];
         res.body.forEach(function(item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
@@ -41,7 +41,7 @@ describe('posts', function() {
         res.should.be.json;
         res.body.should.be.a('object');
         res.body.id.should.not.be.null; 
-        res.should.include.keys('title', 'content', 'author')
+        res.should.include.keys('id', 'author', 'title', 'content', 'created')
         res.body.should.deep.equal(Object.assign(newPost, {title: res.body.title}));
       });
   });
