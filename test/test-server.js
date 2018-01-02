@@ -32,7 +32,7 @@ describe('post', function() {
     const newPost = {author : 'jules verne',
                      title: 'five weeks',
                      content: 'lorem ipsum',
-                     created: '12/12/2018'
+                     created: '10 August 1977'
                     }; 
     return chai.request(app)
       .post('/posts')
@@ -61,7 +61,8 @@ describe('post', function() {
     const updateData = {
       author: 'Robin',
       title: 'New Book',
-      content: 'lorem ipsum'
+      content: 'lorem ipsum',
+      created: '10 June 1988'
     };
     return chai.request(app)
       .get('/posts')
