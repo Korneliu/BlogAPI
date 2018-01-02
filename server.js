@@ -44,8 +44,21 @@ app.post('/posts', jsonParser, (req, res) => {
 			return res.status(400).send(message);
 		}
 	}
-	const item = BlogPost.create(req.body);
-	res.status(201).json(item);
+
+	BlogPost
+	.create({
+		title: req.body.title,
+		content: req.body.content,
+		author: req.body.author,
+		created: req.body.created
+	})
+	then(
+		restaurant=> res.status(201).json(restaurant.serialize()))
+	.catch(err=> {
+		res.status(500).json({message: 'internal error'});
+	});
+	/*const item = BlogPost.create(req.body);
+	res.status(201).json(item);*/
 });
 
 app.delete('/posts/:id', (req, res) => {
