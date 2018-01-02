@@ -31,7 +31,8 @@ describe('post', function() {
   it('should add a blog post on POST', function() {
     const newPost = {author : 'jules verne',
                      title: 'five weeks',
-                     content: 'lorem ipsum'
+                     content: 'lorem ipsum',
+                     created: '12/12/2018'
                     }; 
     return chai.request(app)
       .post('/posts')
@@ -56,7 +57,7 @@ describe('post', function() {
      });
   });
 
-  it('should update recipes on PUT', function() {
+  it('should update posts on PUT', function() {
     const updateData = {
       author: 'Robin',
       title: 'New Book',
