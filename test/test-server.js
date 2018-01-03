@@ -21,10 +21,10 @@ describe('post', function() {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.above(0);
-        /*res.body.forEach(function(item) {
+        res.body.forEach(function(item) {
           item.should.be.a('object');
           item.should.have.all.keys('id','author','title','content','created');
-        });*/
+        });
       });
     });
  
@@ -41,10 +41,10 @@ describe('post', function() {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
-        /*res.body.should.include.keys('author', 'title', 'content',);
+        res.body.should.include.keys('author', 'title', 'content',);
         res.body.author.should.equal(newPost.author);
         res.body.title.should.equal(newPost.title);
-        res.body.content.should.equal(newPost.content);*/
+        res.body.content.should.equal(newPost.content);
       });
   });
   it('should error if POST missing expected values', function() {
