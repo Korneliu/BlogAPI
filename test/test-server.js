@@ -41,7 +41,8 @@ describe('post', function() {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.should.include.keys('author', 'title', 'content','created');
+        res.body.should.include.keys('id','author', 'title', 'content','created');
+        res.body.id.should.equal(newPost.id);
         res.body.author.should.equal(newPost.author);
         res.body.title.should.equal(newPost.title);
         res.body.content.should.equal(newPost.content);
