@@ -13,7 +13,7 @@ app.use(cors());
 app.get('/posts', (req, res) => {
 	BlogPost
 	.find()
-	.limit(10)
+	.limit(20)
 	.then(posts => {
 		res.json(posts.map(post => post.serialize()));
 	})
@@ -35,7 +35,7 @@ app.get('/posts/:id', (req, res) => {
 });
 
 app.post('/posts', jsonParser, (req, res) => {
-	const requiredFields = ['title', 'content', 'author', 'created'];
+	const requiredFields = ['title', 'content', 'author','created'];
 	for (let i=0; i<requiredFields.length; i++) {
 	const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -52,13 +52,11 @@ app.post('/posts', jsonParser, (req, res) => {
 		author: req.body.author,
 		created: req.body.created
 	})
-	then(
-		restaurant=> res.status(201).json(restaurant.serialize()))
+	.then(
+		BlogPost => res.status(201).json(BlogPost.serialize()))
 	.catch(err=> {
 		res.status(500).json({message: 'internal error'});
 	});
-	/*const item = BlogPost.create(req.body);
-	res.status(201).json(item);*/
 });
 
 app.delete('/posts/:id', (req, res) => {
@@ -95,13 +93,15 @@ app.put('/posts/:id', jsonParser, (req, res) => {
 	BlogPost.findByIdAndUpdate(req.params.id,{
 		id: req.params.id,
 		title: req.body.title,
+		author: req.body.author,
 		content: req.body.content,
 		created: req.body.created
-  },function(err) {
+  	},
+  	function(err) {
   	if(err)
   		return res.status(500).send(err)
   			res.status(204).end();
-  }
+    }	
   ) 
 });
 
