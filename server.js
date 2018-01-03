@@ -35,7 +35,7 @@ app.get('/posts/:id', (req, res) => {
 });
 
 app.post('/posts', jsonParser, (req, res) => {
-	const requiredFields = ['title', 'content', 'author','created'];
+	const requiredFields = ['title', 'content', 'firstName','lastName','created'];
 	for (let i=0; i<requiredFields.length; i++) {
 	const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -49,7 +49,7 @@ app.post('/posts', jsonParser, (req, res) => {
 	.create({
 		title: req.body.title,
 		content: req.body.content,
-		author: req.body.author,
+		author: {firstName:req.body.firstName,lastName:req.body.lastName},
 		created: req.body.created
 	})
 	.then(

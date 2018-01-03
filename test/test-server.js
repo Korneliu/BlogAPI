@@ -23,30 +23,29 @@ describe('post', function() {
         res.body.length.should.be.above(0);
         res.body.forEach(function(item) {
           item.should.be.a('object');
-          item.should.have.all.keys('id','author','title','content','created');
+          item.should.have.include.keys('id','author','title','content');
         });
       });
     });
  
   it('should add a blog post on POST', function() {
-    const newPost = {author : 'jules verne',
+    const newPost = {firstName: 'Jules',
+                     lastName: 'Verne',
                      title: 'five weeks',
                      content: 'lorem ipsum',
-                     created: '10 August 1977'
+                     created: '10 June 1890'
                     }; 
     return chai.request(app)
       .post('/posts')
       .send(newPost)
       .then(function(res) {
         res.should.have.status(201);
+        console.log(res.body);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.should.include.keys('id','author', 'title', 'content','created');
-        res.body.id.should.equal(newPost.id);
-        res.body.author.should.equal(newPost.author);
+        res.body.should.include.keys('id','author', 'title', 'content');
         res.body.title.should.equal(newPost.title);
         res.body.content.should.equal(newPost.content);
-        res.body.content.should.equal(newPost.created);
       });
   });
   it('should error if POST missing expected values', function() {
