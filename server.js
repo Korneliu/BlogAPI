@@ -33,6 +33,24 @@ app.get('/posts/:id', (req, res) => {
         res.status(500).json({message: 'Internal server error'})
     });
 });
+app.get('/posts', (req, res) => {
+    const filters = {};
+    const queryableFields = ['title','author'];
+    queryableFields.forEach(field => {
+        if (req.query[field]) {
+            filters[field] = req.query[field];
+        }
+    });
+    BlogPost
+        .find(filters)
+        .then(posts => res.json(
+            BlogPost.map(posts => BlogPost.serialize())
+        ))
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({message: 'Internal server error'})
+        });
+}); 
 
 app.post('/posts', jsonParser, (req, res) => {
 	const requiredFields = ['title', 'content', 'firstName','lastName','created'];
@@ -71,9 +89,8 @@ app.delete('/posts/:id', (req, res) => {
 		});
 });
 
-
 app.put('/posts/:id', jsonParser, (req, res) => {
-	const requiredFields = ['title', 'content', 'author', 'created']; 
+	const requiredFields = ['title', 'content', 'firstName','lastName', 'created']; 
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -90,10 +107,11 @@ app.put('/posts/:id', jsonParser, (req, res) => {
 		return res.status(400).send(message);
 	}
 	console.log(`Updating blog-posts item \`${req.params.id}\``);
-	BlogPost.findByIdAndUpdate(req.params.id,{
+	BlogPost.findByIdAndUpdate(req.params.id,
+	  {
 		id: req.params.id,
 		title: req.body.title,
-		author: req.body.author,
+		author: {firstName:req.body.firstName,lastName:req.body.lastName},
 		content: req.body.content,
 		created: req.body.created
   	},
